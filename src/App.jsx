@@ -1,10 +1,24 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [user, setUser] = useState(null)
+
+  useEffect(() => {
+    // Check authentication status when component mounts
+    fetch("https://python-flask-auth-demo.azurewebsites.net/.auth/me", { credentials: "include" })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setUser(data);
+      })
+      .catch(err => {
+        console.error("Authentication check failed:", err);
+      });
+  }, []);
 
   const handleLogin = () => {
     window.location.href = "https://python-flask-auth-demo.azurewebsites.net/.auth/login/aad";
@@ -28,6 +42,11 @@ function App() {
         <button onClick={handleLogin}>
           Login
         </button>
+        {user && (
+          <div>
+            <p>Logged in as: {JSON.stringify(user)}</p>
+          </div>
+        )}
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
         </p>
