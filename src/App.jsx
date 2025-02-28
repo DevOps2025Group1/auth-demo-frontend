@@ -6,6 +6,10 @@ import './App.css'
 function App() {
   const [count, setCount] = useState(0)
 
+  const handleLogin = () => {
+    window.location.href = "https://python-flask-auth-demo.azurewebsites.net/.auth/login/aad";
+  }
+
   return (
     <>
       <div>
@@ -20,6 +24,9 @@ function App() {
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
+        </button>
+        <button onClick={handleLogin}>
+          Login
         </button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
